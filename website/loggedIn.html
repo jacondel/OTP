@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>Memory 1</title>
+<button onClick="printMap()">map</button>
+<link rel="stylesheet" 
+href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+
+  td {
+      height: 100px;
+      font-size: 40px;
+    }
+    #t2{
+      color:white; 
+      height:100px; 
+      text-align:center;
+      border:none;
+      background: none;
+    }
+
+    .navbar { margin-bottom: 0; }
+    
+   .navbar-inverse { background-color: #222222}
+.navbar-inverse .navbar-nav>.active>a:hover,.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus { background-color: #045FB4}
+.navbar-inverse .navbar-nav>.active>a,.navbar-inverse .navbar-nav>.open>a,.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover,.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus { background-color: #222222}
+.dropdown-menu { background-color: #222222}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus { background-color: #045FB4}
+.navbar-inverse { background-image: none; }
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus { background-image: none; }
+.navbar-inverse { border-color: #080808}
+.navbar-inverse .navbar-brand { color: #999999}
+.navbar-inverse .navbar-brand:hover { color: #FFFFFF}
+.navbar-inverse .navbar-nav>li>a { color: #999999}
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus { color: #FFFFFF}
+.navbar-inverse .navbar-nav>.active>a,.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus { color: #FFFFFF}
+.navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus { color: #FFFFFF}
+.dropdown-menu>li>a { color: #FFFFFF}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus { color: #FFFFFF}
+.navbar-inverse .navbar-nav>.dropdown>a .caret { border-top-color: #999999}
+.navbar-inverse .navbar-nav>.dropdown>a:hover .caret { border-top-color: #FFFFFF}
+.navbar-inverse .navbar-nav>.dropdown>a .caret { border-bottom-color: #999999}
+.navbar-inverse .navbar-nav>.dropdown>a:hover .caret { border-bottom-color: #FFFFFF}
+
+  	.jumbotron {
+      background-color: #045FB4;
+      color: #fff;
+      padding: 140px 25px;
+      font-family: Montserrat, sans-serif;
+  }
+    .col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Train <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Training Method 1</a></li>
+            <li><a href="#">Training Method 2</a></li>
+            <li><a href="#">Training Method 3</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Test</a></li>
+        <li><a href="#">Account</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+  <div class="jumbotron text-center">
+  <h1>Memory Project</h1>
+  <p>Group project for CSE421</p>
+<p id=>You have logged in.</p>
+<div id="welcome"> </div>
+
+<table id = "t2" class="table">
+  <thead>
+    <tr>
+      <th>Letter</th>
+      <th>Digit</th>
+    </tr>
+  </thead>
+  <tbody id = "mapDiv">
+    
+  </tbody>
+</table>
+
+<script src="dbAccess.js"> </script>
+
+<script>
+var uName = window.sessionStorage.getItem("personName");
+var uEMail = window.sessionStorage.getItem("personEMail");
+document.getElementById("welcome").innerHTML += "Welcome "+ uName+ "!"
+document.getElementById("welcome").innerHTML += "</br> "+ uEMail
+
+//document.write("Welcome "+ uName+ "!");
+//document.write("<br>");
+//document.write(uEMail);
+
+//addEmailToDB(uEMail,uName);
+console.log("Ran email to db");
+
+//add user to database
+cb = function() {};
+addEmailToDBSuccess(uEMail,uName,cb);
+
+//use this.responseText to populate table
+checkMap = function(){
+  //extract map from JSON response
+  row =  JSON.parse(this.responseText);
+  if(row){
+    map = row[0].Map.split(',')
+    console.log("yesmap");
+
+  }else{
+    console.log("nomap");
+    newMap = new Array()
+    for (i = 0; i < 26; i++){
+      newMap[i] = Math.floor(Math.random()*10)
+    }
+    setMapInDBSuccess(uEMail,newMap, function(){})
+  }
+
+}//cb2
+
+getMapFromDBSuccess(uEMail,checkMap);
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

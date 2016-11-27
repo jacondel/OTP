@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<style>
+
+
+
+</style>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<div class="container" id="container">
+
+    <div class="form-group">
+      <label for="textBox">Username:</label>
+      <input class="form-control input-lg" id="textBox" type="text">
+    </div>
+
+    <div>
+        <label id="response">
+        </label>
+    </div>
+
+    <button type="button" id="submit" class="btn btn-lg btn-primary btn-block" onclick = "signup()"> Add User</button>
+
+    <button type="button" id="return" class="btn btn-lg btn-primary btn-block"  onclick="location.href='index.html'"> Return to login </button>
+
+</div>
+
+<script src="dbAccess.js"></script>
+
+<script>
+document.getElementById("textBox").disabled = false;
+
+function signup(){
+  cb = function() {
+    document.getElementById("response").innerHTML = this.responseText;
+    document.getElementById("submit").style.display = "none";
+    document.getElementById("return").style.display = "";
+    document.getElementById("textBox").disabled = true;
+  };
+  addUserToDBSuccess(document.getElementById("textBox").value,cb);
+}
+
+
+
+
+</script>
+
+</body>
+</html>
+

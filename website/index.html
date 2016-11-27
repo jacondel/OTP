@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="container" id="container">
+    <div class="form-group">
+      <label for="textBox">Username:</label>
+      <input class="form-control input-lg" onkeydown="restColor()" id="username" type="text">
+    </div>
+    
+    <div class="form-group">
+      <label for="textBox">Hash:</label>
+      <input class="form-control input-lg" onkeydown="restColor()" id="hash" type="text">
+    </div>
+
+  <button type="button" class="btn btn-lg btn-primary btn-block" onclick="login()"> Login </button>
+
+  <button type="button" class="btn btn-lg btn-primary btn-block" onclick="location.href='signup.html'"> Sign Up </button>
+
+  <div id="demo"></div>
+</div>
+<script src="dbAccess.js"></script>
+
+<script>
+
+
+function restColor(){
+  document.getElementById("username").style.color = "";
+  document.getElementById("hash").style.color = "";
+}
+
+function login(){
+  cb = function() {
+    if(this.responseText == "Success"){
+      window.location = "success.html"
+    }else{
+      document.getElementById("username").style.color = "#d9534f";
+      document.getElementById("hash").style.color = "#d9534f";
+    }
+  };
+  validateUserFromDBSuccess(document.getElementById("username").value,document.getElementById("hash").value,cb);
+}
+
+
+
+
+</script>
+
+</body>
+</html>
+
